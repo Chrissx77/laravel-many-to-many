@@ -37,4 +37,29 @@ class ProjectController extends Controller
         return redirect() -> route('project.index');
 
     }
+
+
+    public function edit($id){
+        $types = Type :: all();
+        $technologies = Technologie :: all();
+        $project = Project :: find($id);
+
+        return view('pages.project.edit', compact('types', 'technologies', 'project'));
+    }
+
+    public function update(Request $request, $id){
+
+        $data = $request -> all();
+
+        $type = Type :: find($data['type_id']);
+
+        $project = Project :: find($id);
+        $project -> name = $data['name'];
+        $project -> type() -> associate($type);
+        $project -> save();
+        $project -> technologies() -> sync($data['technologie_id']);
+
+        return redirect() -> route('project.index');
+
+    }
 }

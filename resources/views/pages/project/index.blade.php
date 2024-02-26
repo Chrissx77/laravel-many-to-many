@@ -12,6 +12,7 @@
                 <h3>Nome Progetto: {{ $project->name }}</h3>
                 <h3>Tipologia Progetto: {{ $project->type->tipologia }}</h3>
                 <br>
+                <a href="{{route('project.edit', $project->id)}}">EDIT</a>
                 <ul>
                     <h2>Tecnologie:</h2>
                     @foreach ($project->technologies as $technologie)
