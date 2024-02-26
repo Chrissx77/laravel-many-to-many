@@ -19,7 +19,7 @@ class TechnologieTableSeeder extends Seeder
     {
         Technologie :: factory() -> count(10) -> create() -> each(
             function($technologie){
-                $projects = Project :: inRandomOrder() -> limit(rand(1,5)) -> get();
+                $projects = Project :: inRandomOrder() -> limit(3) -> get();
                 $technologie -> projects() -> attach($projects);
                 $technologie -> save();
 
