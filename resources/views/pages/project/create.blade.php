@@ -5,13 +5,17 @@
 @section('content')
     <h1>New Project</h1>
 
-    <form method="POST">
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
         @method('POST')
         @csrf
 
         <label for="name">Name</label>
         <input type="text" name="name" id="name">
-        <br><br>
+        <br>
+        <br>
 
         <label for="type_id">Type</label>
         <select name="type_id" id="Type_id">
@@ -23,6 +27,11 @@
         </select>
         <br>
         <br>
+
+        <label for="image">Image</label>
+        <input type="file" name="image" id="image">
+
+
         @foreach ($technologies as $technologie)
             <div>
                 <input type="checkbox" name="technologie_id[]" value="{{ $technologie->id }}"

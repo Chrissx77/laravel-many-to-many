@@ -6,6 +6,8 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Technologie;
 use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\StorageAttributes;
 
 class ProjectController extends Controller
 {
@@ -26,10 +28,14 @@ class ProjectController extends Controller
     public function store(Request $request){
         $data = $request -> all();
 
+        $img = $data['image'];
+        $img_path = Storage :: disk('public') -> put('images', $img);
+
         $type = Type :: find($data['type_id']);
 
         $project = new Project();
         $project -> name = $data['name'];
+        $project -> image = $img_path;
         $project -> type() -> associate($type);
         $project -> save();
         $project -> technologies() -> attach($data['technologie_id']);
