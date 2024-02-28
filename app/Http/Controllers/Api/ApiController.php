@@ -25,4 +25,14 @@ class ApiController extends Controller
 
         ]);
     }
+
+    public function createTechnologies(Request $request){
+        $data = $request -> all();
+
+        return response() -> json([
+            'status' => 'success',
+            'data' => $data,
+        ]);
+
+    }
 }

@@ -1,5 +1,28 @@
 <template>
-    <h1>Hello from API CONTENT!</h1>
+    <h1>TECNOLOGIE!</h1>
+
+    <form v-if="createFlag"
+    @submit.prevent="submitTech"
+    >
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" v-model="nameTech">
+        <br>
+        <input type="submit" value="Create">
+    </form>
+
+
+    <div v-else>
+        <button @click="toggleCreate">CREA NUOVA TECNOLOGIA</button>
+    <ul>
+        <li v-for="technology in technologies" :key="technology.id">
+            <p>
+                {{ technology.name }}
+            </p>
+        </li>
+    </ul>
+    </div>
+
+
 </template>
 
 <script>
@@ -12,15 +35,36 @@ export default {
 
     data(){
         return{
-            technologies: []
+            technologies: [],
+            createFlag : false,
+            nameTech : '',
+        }
+    },
+
+    methods:{
+        toggleCreate(){
+            this.createFlag = true;
+        },
+
+        submitTech(){
+            axios.post('http://127.0.0.1:8000/api/v1/technologies', this.nameTech)
+            .then(res=>{
+                const data = res.data;
+                console.log(data);
+            })
+            .catch(err=>{
+                console.err(err);
+            })
         }
     },
 
     mounted(){
-        axios.get('http://127.0.0.1:8000/api/v1/test')
+        axios.get('http://127.0.0.1:8000/api/v1/technologies')
             .then(res=>{
                 const data = res.data;
-                console.log(data);
+                if(data.status === 'success'){
+                    this.technologies = data.technologies;
+                }
             })
             .catch(err=>{
                 console.err(err);
