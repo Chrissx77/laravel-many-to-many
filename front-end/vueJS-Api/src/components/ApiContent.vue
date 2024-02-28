@@ -3,7 +3,7 @@
 
     <form v-if="createFlag" @submit.prevent="submitTech">
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" v-model="nameTech" />
+        <input type="text" name="name" id="name" v-model="newTech.name" />
         <br />
         <input type="submit" value="Create" />
     </form>
@@ -30,7 +30,9 @@ export default {
         return {
             technologies: [],
             createFlag: false,
-            nameTech: "",
+            newTech : {
+                name: '',
+            },
         };
     },
 
@@ -41,15 +43,17 @@ export default {
 
         submitTech() {
             axios
-            .post("http://127.0.0.1:8000/api/v1/technologies")
+            .post('http://127.0.0.1:8000/api/v1/technologies', this.newTech)
             .then(res => {
                 const data = res.data;
-                if (data.status == "success") {
-                    this.technologies = data.technology;
-                }
+                console.log(data);
+                // if (data.status == 'success') {
+                //     this.technologies.push(data.technology);
+                // }
+                // this.createFlag = false;
             })
             .catch(err => {
-                console.err(err);
+                console.error(err);
             });
         },
     },
@@ -64,7 +68,7 @@ export default {
                 }
             })
             .catch(err => {
-                console.err(err);
+                console.error(err);
             });
     },
 };
