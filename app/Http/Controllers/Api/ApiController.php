@@ -29,9 +29,15 @@ class ApiController extends Controller
     public function createTechnologies(Request $request){
         $data = $request -> all();
 
+        $technology = new Technologie();
+        $technology = $data['name'];
+        $technology -> save();
+
+
+
         return response() -> json([
             'status' => 'success',
-            'data' => $data,
+            'data' => $technology,
         ]);
 
     }
