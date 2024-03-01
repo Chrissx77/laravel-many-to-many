@@ -30,8 +30,8 @@ export default {
         return {
             technologies: [],
             createFlag: false,
-            newTech : {
-                name: '',
+            newTech: {
+                name: "",
             },
         };
     },
@@ -43,31 +43,30 @@ export default {
 
         submitTech() {
             axios
-            .post('http://127.0.0.1:8000/api/v1/technologies', this.newTech)
-            .then(res => {
-                const data = res.data;
-                console.log(data);
-                // if (data.status == 'success') {
-                //     this.technologies.push(data.technology);
-                // }
-                // this.createFlag = false;
-            })
-            .catch(err => {
-                console.error(err);
-            });
+                .post("http://127.0.0.1:8000/api/v1/technologies", this.newTech)
+                .then((res) => {
+                    const data = res.data;
+                    if (data && data.status === "success" && data.technology) {
+                        this.technologies.push(data.technology);
+                        this.createFlag = false;
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         },
     },
 
     mounted() {
         axios
             .get("http://127.0.0.1:8000/api/v1/technologies")
-            .then(res => {
+            .then((res) => {
                 const data = res.data;
                 if (data.status == "success") {
                     this.technologies = data.technologies;
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err);
             });
     },

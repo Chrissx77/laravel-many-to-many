@@ -17,7 +17,7 @@ class TechnologieFactory extends Factory
     public function definition()
     {
         return [
-            "name" => fake() -> unique() -> word,
+            "name" => fake() -> word,
         ];
     }
 }

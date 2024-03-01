@@ -30,7 +30,7 @@ class ApiController extends Controller
         $data = $request -> all();
 
         $technology = new Technologie();
-        $technology = $data['name'];
+        $technology -> name = $data['name'];
         $technology -> save();
 
 
